@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>لوحة مؤشر التزامك - هاكثون أبشر طويق</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --page-bg: #e5f0ff;
+      --card-bg: #0b1220;
+      --inner-bg: #020617;
+      --border: #1f2937;
+      --accent: #22c55e;
+      --accent-yellow: #facc15;
+      --accent-orange: #f97316;
+      --text-main: #e5e7eb;
+      --text-sub: #9ca3af;
+      --shadow: 0 22px 55px rgba(15, 23, 42, 0.65);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #dbeafe 0, #e5f0ff 50%, #e5e7eb 100%);
+      color: var(--text-main);
+      text-align: right;
+    }
+
+    header {
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #cbd5f5;
+      background: linear-gradient(90deg, #0f172a, #020617);
+      color: #e5e7eb;
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .header-icon {
+      width: 40px; height: 40px; border-radius: 999px;
+      background: #020617;
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 2px #020617, 0 0 18px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+    }
+    .logo-img { width: 100%; height: 100%; object-fit: cover; }
+    .header-title-main { font-weight: 700; font-size: 17px; }
+    .header-title-sub { font-size: 11px; color: #9ca3af; }
+    .header-right a {
+      font-size: 12px; color: #bfdbfe; text-decoration: none;
+    }
+    .header-right a:hover { text-decoration: underline; }
+
+    .shell {
+      max-width: 1280px;
+      margin: 26px auto 40px;
+      padding: 0 16px;
+    }
+    .card {
+      background: radial-gradient(circle at top left, #111827, #020617 60%, #020617 100%);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 20px 20px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset-inline-end: -80px;
+      inset-block-start: -90px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(34,197,94,0.25), transparent 65%);
+      pointer-events: none;
+    }
+
+    .top-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .title-block { max-width: 70%; }
+    .page-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .page-sub { font-size: 12px; color: var(--text-sub); }
+    .page-sub strong { color: var(--accent); }
+    .chips-row {
+      margin-top: 8px;
+      display: flex; flex-wrap: wrap; gap: 6px;
+      font-size: 10px;
+    }
+    .chip {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid #334155;
+      color: #e5e7eb;
+      background: rgba(15,23,42,0.85);
+    }
+    .chip-ghost { color: #9ca3af; border-style: dashed; }
+    .note-small { font-size: 10px; color: #9ca3af; text-align: right; }
+
+    @media (max-width: 900px) {
+      .title-block { max-width: 100%; }
+    }
+
+    .layout {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.4fr);
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .coach-card {
+      background: #020617;
+      border-radius: 18px;
+      border: 1px solid #111827;
+      padding: 14px 14px 16px;
+    }
+    .coach-title {
+      font-size: 14px; font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 4px;
+    }
+    .coach-title span.icon { font-size: 16px; }
+    .coach-sub { font-size: 11px; color: var(--text-sub); margin-bottom: 8px; }
+    .coach-list { display: flex; flex-direction: column; gap: 8px; font-size: 11px; }
+    .coach-tip {
+      border-radius: 12px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      padding: 7px 9px;
+    }
+    .coach-tag { font-size: 10px; margin-bottom: 2px; }
+    .coach-tag.appointments { color: var(--accent); }
+    .coach-tag.docs { color: var(--accent-yellow); }
+    .coach-tag.fines { color: var(--accent-orange); }
+    .coach-main { font-size: 11px; color: #e5e7eb; }
+    .bottom-note {
+      margin-top: 10px;
+      font-size: 10px;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    .gauge-card {
+      background: #020617;
+      border-radius: 18px;
+      border: 1px solid #111827;
+      padding: 14px 14px 16px;
+    }
+    .gauge-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .gauge-title {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .gauge-title span.icon { font-size: 16px; }
+    .gauge-caption {
+      font-size: 11px;
+      color: var(--text-sub);
+      text-align: right;
+    }
+
+    .gauge-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauge {
+      width: 210px; height: 210px;
+      border-radius: 50%;
+      background: conic-gradient(#22c55e 0deg, #111827 0deg 360deg);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gauge-inner {
+      width: 136px; height: 136px;
+      border-radius: 50%;
+      background: #020617;
+      border: 1px solid #111827;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .gauge-score { font-size: 34px; font-weight: 800; color: var(--accent); }
+    .gauge-label { font-size: 11px; color: var(--text-sub); }
+    .gauge-status {
+      margin-top: 10px;
+      font-size: 12px;
+      text-align: center;
+      color: var(--text-sub);
+    }
+    .gauge-status strong { color: var(--accent); }
+
+    .legend {
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      font-size: 10px;
+      color: var(--text-sub);
+    }
+    .dot {
+      width: 9px; height: 9px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-left: 4px;
+    }
+    .dot.green { background: var(--accent); }
+    .dot.yellow { background: var(--accent-yellow); }
+    .dot.red { background: #ef4444; }
+
+    .metric-grid {
+      flex: 1;
+      min-width: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .metric-card {
+      background: #020617;
+      border-radius: 14px;
+      border: 1px solid #1f2937;
+      padding: 9px 9px 10px;
+    }
+    .metric-label { font-size: 11px; color: var(--text-sub); margin-bottom: 3px; }
+    .metric-value { font-size: 18px; font-weight: 700; }
+    .metric-note { font-size: 10px; color: #6b7280; margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <div class="header-icon">
+        <img src="/creative-logo.jpg" alt="شعار فريق كريتيف" class="logo-img" />
+      </div>
+      <div>
+        <div class="header-title-main">لوحة مؤشر التزامك</div>
+        <div class="header-title-sub">نموذج مبسّط من فريق كريتيف في هاكثون أبشر طويق</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <a href="/index.html">الرجوع للواجهة الرئيسية</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="card">
+      <div class="top-row">
+        <div class="title-block">
+          <div class="page-title">صورة سريعة لالتزامك اليوم</div>
+          <div class="page-sub">
+            الفكرة: <strong>درجة واحدة</strong> تلخّص تعاملاتك مع المواعيد، الوثائق والمخالفات،
+            وتوضح لك بسرعة أين تحتاج تحسين.
+          </div>
+          <div class="chips-row">
+            <span class="chip chip-ghost">الأرقام المعروضة للتجربة فقط</span>
+            <span class="chip">بيانات غير حساسة</span>
+            <span class="chip">تحليل بسيط وواضح</span>
+            <span class="chip">جاهز للتوسع وربطه بخدمات أكثر</span>
+          </div>
+        </div>
+        <div class="note-small">
+          * الهدف من هذه اللوحة هو توضيح شكل الفكرة، وليس إظهار بيانات حقيقية.
+        </div>
+      </div>
+
+      <div class="layout">
+        <!-- مدرب الالتزام -->
+        <aside class="coach-card">
+          <div class="coach-title">
+            <span class="icon">🤖</span>
+            <span>مدرب الالتزام الذكي</span>
+          </div>
+          <div class="coach-sub">
+            ثلاث رسائل قصيرة تركز على أهم شيء تقدر تحسّنه الآن، بدل تقارير طويلة ومزعجة.
+          </div>
+
+          <div class="coach-list">
+            <div class="coach-tip">
+              <div class="coach-tag appointments">المواعيد</div>
+              <div class="coach-main">
+                فوّت أكثر من موعد واحد خلال آخر شهرين.  
+                فعِّل تذكير قبل الموعد بـ 24 ساعة للحفاظ على مؤشر المواعيد فوق 90%.
+              </div>
+            </div>
+
+            <div class="coach-tip">
+              <div class="coach-tag docs">الوثائق</div>
+              <div class="coach-main">
+                الهوية والرخصة تتجدد أحيانًا متأخرة.  
+                فعِّل تنبيه قبل الانتهاء بـ 30–60 يوم لتفادي انقطاع الخدمات.
+              </div>
+            </div>
+
+            <div class="coach-tip">
+              <div class="coach-tag fines">المخالفات</div>
+              <div class="coach-main">
+                سداد المخالفة خلال 7 أيام يقلّل تراكم الغرامات
+                ويرفع مؤشر التزام المرور على المدى القريب.
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom-note">
+            * في النسخة الحقيقية يمكن تخصيص التوصيات لكل مستخدم وربطها بتنبيهات داخل التطبيق أو عبر الرسائل.
+          </div>
+        </aside>
+
+        <!-- المؤشر العام -->
+        <div class="gauge-card">
+          <div class="gauge-header">
+            <div class="gauge-title">
+              <span class="icon">📊</span>
+              <span>المؤشر العام</span>
+            </div>
+            <div class="gauge-caption">
+              درجة تقريبية من 0 إلى 100 تلخّص مستوى التزام المستخدم مع الخدمات الحكومية حاليًا.
+            </div>
+          </div>
+
+          <div class="gauge-wrapper">
+            <div>
+              <div class="gauge" data-target="78">
+                <div class="gauge-inner">
+                  <div class="gauge-score">0</div>
+                  <div class="gauge-label">من 100</div>
+                </div>
+              </div>
+              <div class="gauge-status">
+                مستوى الالتزام حاليًا <strong>جيّد</strong>، مع فرصة واضحة للتحسين في
+                <span style="color:var(--accent-yellow);">الوثائق</span> و
+                <span style="color:var(--accent-orange);">المخالفات</span>.
+              </div>
+              <div class="legend">
+                <span><span class="dot green"></span> جيّد</span>
+                <span><span class="dot yellow"></span> متوسّط</span>
+                <span><span class="dot red"></span> يحتاج تحسين</span>
+              </div>
+            </div>
+
+            <div class="metric-grid">
+              <div class="metric-card">
+                <div class="metric-label">المواعيد الحكومية</div>
+                <div class="metric-value metric-number" data-target="90" style="color:var(--accent);">0%</div>
+                <div class="metric-note">
+                  معظم المواعيد يتم حضورها في وقتها.
+                </div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-label">تجديد الوثائق</div>
+                <div class="metric-value metric-number" data-target="72" style="color:var(--accent-yellow);">0%</div>
+                <div class="metric-note">
+                  بعض الوثائق تُجدَّد متأخرة، لكن يمكن تحسينها بتنبيهات مبكرة.
+                </div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-label">التزام المرور</div>
+                <div class="metric-value metric-number" data-target="55" style="color:var(--accent-orange);">0%</div>
+                <div class="metric-note">
+                  يوجد تأخير في سداد المخالفات يضغط المؤشر المروري للأسفل.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const gauge = document.querySelector(".gauge");
+      if (gauge) {
+        const target = Number(gauge.dataset.target) || 0;
+        const scoreEl = gauge.querySelector(".gauge-score");
+        animateGauge(gauge, scoreEl, target);
+      }
+      document.querySelectorAll(".metric-number").forEach(el => {
+        const target = Number(el.dataset.target) || 0;
+        animateNumber(el, target, "%");
+      });
+    });
+
+    function animateGauge(gaugeEl, scoreEl, target) {
+      const duration = 1200;
+      const start = performance.now();
+      function frame(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const value = Math.round(progress * target);
+        const angle = (value / 100) * 360;
+        gaugeEl.style.background =
+          `conic-gradient(#22c55e 0deg ${angle}deg, #111827 ${angle}deg 360deg)`;
+        scoreEl.textContent = value.toString();
+        if (progress < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function animateNumber(el, target, suffix) {
+      const duration = 900;
+      const start = performance.now();
+      function frame(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const value = Math.round(progress * target);
+        el.textContent = value.toString() + suffix;
+        if (progress < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+  </script>
+</body>
+</html>
