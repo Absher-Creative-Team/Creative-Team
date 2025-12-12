@@ -245,6 +245,56 @@
     .metric-label { font-size: 11px; color: var(--text-sub); margin-bottom: 3px; }
     .metric-value { font-size: 18px; font-weight: 700; }
     .metric-note { font-size: 10px; color: #6b7280; margin-top: 2px; }
+
+    /* مقارنة مع الشهر الماضي */
+    .comparison-row {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid #1f2937;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+    .comparison-title {
+      font-weight: 500;
+    }
+    .comparison-title strong {
+      color: var(--accent);
+    }
+    .comparison-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .comparison-card {
+      background: #020617;
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      padding: 5px 9px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+    }
+    .comparison-label {
+      color: #e5e7eb;
+    }
+    .delta-up {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .delta-down {
+      color: var(--accent-orange);
+      font-weight: 600;
+    }
+    .delta-note {
+      color: #9ca3af;
+      font-size: 10px;
+    }
   </style>
 </head>
 <body>
@@ -264,7 +314,6 @@
       <a href="/Creative-Team/">الرجوع للواجهة الرئيسية</a>
     </div>
   </header>
-
 
   <main class="shell">
     <section class="card">
@@ -384,6 +433,30 @@
                 <div class="metric-note">
                   يوجد تأخير في سداد المخالفات يضغط المؤشر المروري للأسفل.
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- مقارنة مع الشهر الماضي -->
+          <div class="comparison-row">
+            <div class="comparison-title">
+              كيف تغيّر <strong>التزامك عن الشهر الماضي؟</strong>
+            </div>
+            <div class="comparison-cards">
+              <div class="comparison-card">
+                <span class="comparison-label">المؤشر العام:</span>
+                <span class="delta-up">▲ +5 نقاط</span>
+                <span class="delta-note">(من 73 إلى 78)</span>
+              </div>
+              <div class="comparison-card">
+                <span class="comparison-label">المواعيد:</span>
+                <span class="delta-up">▲ +8%</span>
+                <span class="delta-note">حضور أفضل</span>
+              </div>
+              <div class="comparison-card">
+                <span class="comparison-label">الوثائق:</span>
+                <span class="delta-down">▼ -4%</span>
+                <span class="delta-note">تجديد متأخر قليلًا</span>
               </div>
             </div>
           </div>
